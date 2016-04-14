@@ -16,7 +16,9 @@ import pacman.controllers.Yu_Liao.Astar_Controller;
 import pacman.controllers.Yu_Liao.BFS_Controller;
 import pacman.controllers.Yu_Liao.DFS_Controller;
 import pacman.controllers.Yu_Liao.HillClimbing_Controller;
+import pacman.controllers.Yu_Liao.KNN_Controller;
 import pacman.controllers.Yu_Liao.Minimax_Controller;
+import pacman.controllers.Yu_Liao.Q_Learning_Controller;
 import pacman.controllers.examples.AggressiveGhosts;
 import pacman.controllers.examples.Legacy;
 import pacman.controllers.examples.Legacy2TheReckoning;
@@ -56,21 +58,21 @@ public class Executor
 		exec.runExperiment(new RandomPacMan(),new RandomGhosts(),numTrials);
 		 */
 		
-		///*
-		//run a game in synchronous mode: game waits until controllers respond.
-		int delay=20;
-		boolean visual=true;
-//		exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);
-		exec.runGame(new Minimax_Controller(),new StarterGhosts(),visual,delay);
-  		//*/
 		
-		/*
+		//run a game in synchronous mode: game waits until controllers respond.
+//		int delay=20;
+//		boolean visual=true;
+//		exec.runGame(new RandomPacMan(),new RandomGhosts(),visual,delay);
+//		exec.runGame(new Q_Learning_Controller(),new StarterGhosts(),visual,delay);
+  		
+		
+		///*
 		//run the game in asynchronous mode.
 		boolean visual=true;
-//		exec.runGameTimed(new NearestPillPacMan(),new AggressiveGhosts(),visual);
-		exec.runGameTimed(new HillClimbing_Controller(),new StarterGhosts(),visual);
+		exec.runGameTimed(new KNN_Controller(),new StarterGhosts(),visual);
+//		exec.runGameTimed(new StarterPacMan(),new StarterGhosts(),visual);
 //		exec.runGameTimed(new HumanController(new KeyBoardInput()),new StarterGhosts(),visual);	
-		*/
+		//*/
 		
 		/*
 		//run the game in asynchronous mode but advance as soon as both controllers are ready  - this is the mode of the competition.

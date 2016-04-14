@@ -349,7 +349,11 @@ public final class Game
 	 * @param ghostMoves The moves supplied by the ghosts controller
 	 */	
 	public void advanceGame(MOVE pacManMove,EnumMap<GHOST,MOVE> ghostMoves)
-	{		
+	{	
+		// record the game states
+		Recorder r = new Recorder();
+		r.printGameInfo(this, pacManMove);
+		
 		updatePacMan(pacManMove);
 		updateGhosts(ghostMoves);	
 		updateGame();
@@ -1540,35 +1544,6 @@ public final class Game
 	}
 	
 	/**
-	 * Gets the exact next move away from target taking into account reversals. This uses the pre-computed paths.
-	 *
-	 * @param fromNodeIndex The node index from which to move (i.e., current position)
-	 * @param toNodeIndex The target node index
-	 * @param lastMoveMade The last move made
-	 * @param distanceMeasure the distance measure to be used
-	 * @return the next move away from target
-	 */
-	public MOVE getNextMoveAwayFromTarget(int fromNodeIndex,int toNodeIndex,MOVE lastMoveMade, DM distanceMeasure)
-	{
-		MOVE move=null;
-
-		double maxDistance=Integer.MIN_VALUE;
-
-		for(Entry<MOVE,Integer> entry : currentMaze.graph[fromNodeIndex].allNeighbourhoods.get(lastMoveMade).entrySet())
-		{
-			double distance=getDistance(entry.getValue(),toNodeIndex,lastMoveMade,distanceMeasure);
-								
-			if(distance>maxDistance)
-			{
-				maxDistance=distance;
-				move=entry.getKey();	
-			}
-		}
-		
-		return move;
-	}
-
-	/**
 	 * Gets the A* path considering previous moves made (i.e., opposing actions are ignored)
 	 *
 	 * @param fromNodeIndex The node index from which to move (i.e., current position)
@@ -1664,5 +1639,34 @@ public final class Game
 			return 0;
 
 		return caches[mazeIndex].getPathDistanceFromA2B(fromNodeIndex,toNodeIndex,lastMoveMade);
+	}
+
+	/**
+	 * Gets the exact next move away from target taking into account reversals. This uses the pre-computed paths.
+	 *
+	 * @param fromNodeIndex The node index from which to move (i.e., current position)
+	 * @param toNodeIndex The target node index
+	 * @param lastMoveMade The last move made
+	 * @param distanceMeasure the distance measure to be used
+	 * @return the next move away from target
+	 */
+	public MOVE getNextMoveAwayFromTarget(int fromNodeIndex,int toNodeIndex,MOVE lastMoveMade, DM distanceMeasure)
+	{
+		MOVE move=null;
+	
+		double maxDistance=Integer.MIN_VALUE;
+	
+		for(Entry<MOVE,Integer> entry : currentMaze.graph[fromNodeIndex].allNeighbourhoods.get(lastMoveMade).entrySet())
+		{
+			double distance=getDistance(entry.getValue(),toNodeIndex,lastMoveMade,distanceMeasure);
+								
+			if(distance>maxDistance)
+			{
+				maxDistance=distance;
+				move=entry.getKey();	
+			}
+		}
+		
+		return move;
 	}
 }
